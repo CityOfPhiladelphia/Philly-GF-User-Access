@@ -46,17 +46,3 @@ foreach ( $plugin_constants as $constant => $value ) {
 
 require_once PHILLY_GF_PATH . "classes/class.pgf-validate-requirements.php";
 new Philly_GF_Validate_Requirements();
-
-
-// Globals
-global $allowed_forms;
-$allowed_forms = array();
-
-add_action( 'admin_init', 'pgf_set_config' );
-function pgf_set_config() {
-	global $allowed_forms;
-
-	$current_user = wp_get_current_user();
-	$allowed_forms = get_field( 'g_form_list', "user_{$current_user->ID}" );
-	if ( empty( $allowed_forms  ) ) $allowed_forms  = array();
-}
