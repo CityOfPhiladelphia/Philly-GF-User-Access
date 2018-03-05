@@ -25,6 +25,10 @@ class Philly_GF_Validate_Requirements {
 		{
 			$this->show_requirements_failed_error();
 		}else{
+			require_once PHILLY_GF_PATH . "classes/class.pgf-configuration.php";
+			require_once PHILLY_GF_PATH . "classes/class.pgf-main.php";
+			require_once PHILLY_GF_PATH . "extra.php";
+			new Philly_GF_Configuration();
 			new Philly_GF_Main();
 		}
 	}
