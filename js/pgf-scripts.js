@@ -13,4 +13,5 @@ jQuery(function() {
         }
     });
     jQuery('#form_switcher').trigger('chosen:updated');
+    jQuery('div#notifications').remove();
 });

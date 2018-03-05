@@ -51,6 +51,7 @@ new Philly_GF_Validate_Requirements();
 global $allowed_forms;
 $allowed_forms = array();
 
+add_action( 'admin_init', 'pgf_set_config' );
 function pgf_set_config() {
 	global $allowed_forms;
 
@@ -58,25 +59,37 @@ function pgf_set_config() {
 	$allowed_forms = get_field( 'g_form_list', "user_{$current_user->ID}" );
 	if ( empty( $allowed_forms  ) ) $allowed_forms  = array();
 
-	wp_register_script( 'pgf-scripts', PHILLY_GF_URL . 'js/pgf-scripts.js', array(
-		'jquery',
-		'gform_chosen'
-	), '1.0', false );
-	
-	wp_localize_script( 'pgf-scripts', 'pgf',
-		array(
-			'allowed_forms' => $allowed_forms
-		)
-	);
+	if ( RGForms::is_gravity_page() ) {
+		wp_register_script( 'pgf-scripts', PHILLY_GF_URL . 'js/pgf-scripts.js', array(
+			'jquery',
+			'gform_chosen'
+		), '1.0', false );
+		
+		wp_localize_script( 'pgf-scripts', 'pgf',
+			array(
+				'allowed_forms' => $allowed_forms
+			)
+		);
+	}
 }
 
-add_action( 'admin_init', 'pgf_set_config' );
-
+add_filter('gform_noconflict_scripts', 'register_safe_script' );
 function register_safe_script( $scripts ){
     $scripts[] = "pgf-scripts";
     return $scripts;
 }
 
-add_filter('gform_noconflict_scripts', 'register_safe_script' );
+add_action( 'admin_head', 'enqueue_styles_for_pgfs' );
+function enqueue_styles_for_pgfs(){
+    if ( RGForms::is_gravity_page() ) {
+        wp_enqueue_style( 'pgf-styles', PHILLY_GF_URL . 'css/styles.css' );
+    }
+}
+ 
+add_filter( 'gform_noconflict_styles', 'register_style' );
+function register_style( $styles ) {
+     $styles[] = 'pgf-styles';
+    return $styles;
+}
 
 require_once PHILLY_GF_PATH . "classes/class.pgf-main.php";
