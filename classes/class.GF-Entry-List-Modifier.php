@@ -24,7 +24,7 @@ class GFEntryListModifier extends GFEntryList {
 			if ( empty( $form_id ) ) {
                 global $allowed_forms;
 
-                $form_ids = array_map( array( self, 'get_ids_only' ), $forms );
+                $form_ids = array_map( array( 'GFEntryListModifier', 'get_ids_only' ), $forms );
                 $form_ids = array_intersect( $form_ids, $allowed_forms );
                 if ( ! empty( $form_ids ) ) {
                     $form_id = array_shift( $form_ids );

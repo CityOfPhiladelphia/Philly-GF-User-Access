@@ -39,6 +39,7 @@ class Philly_GF_Main {
 
     function menu_adjustments () {
         if( class_exists( 'GFForms' ) ) {
+            $addon_menus = array();
             $addon_menus = apply_filters( 'gform_addon_navigation', $addon_menus );
             $parent_menu = GFForms::get_parent_menu( $addon_menus );
 
@@ -93,7 +94,8 @@ class Philly_GF_Main {
         // reset choices
         $field['choices'] = array();
 
-        $choices = $wpdb->get_results( "SELECT title, id FROM {$wpdb->prefix}rg_form WHERE is_active = 1 AND is_trash = 0" );
+        $choices = $wpdb->get_results( "SELECT title, id FROM {$wpdb->prefix}gf_form WHERE is_active = 1 AND is_trash = 0" );
+
 
         // loop through array and add to field 'choices'
         if( is_array($choices) ) {
