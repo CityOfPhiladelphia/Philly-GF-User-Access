@@ -3,7 +3,7 @@
 Plugin Name: Philly Gravity Forms User Access
 Plugin URI: http://forms.phila.gov
 Description: This plugin is a Gravity forms customization in Phila Forms. ACF Field Name => g_form_list; Type => Select; UserRole => form_manager
-Version: 0.0.1
+Version: 1.0
 Author: Alejandro Lopez
 Author URI: http://phila.gov
 License: GPL2
